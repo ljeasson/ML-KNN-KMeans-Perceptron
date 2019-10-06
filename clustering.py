@@ -29,7 +29,9 @@ def K_Means(X,K):
                 min_dist = dist
                 c_i = j
         # Update the center
-        C[c_i] = update_center(C[c_i], X[i], C_n[c_i])
+        current_sum = C[c_i] * C_n[c_i]
+        C_n[c_i] += 1 # update number of samples in cluster
+        C[c_i] = ( current_sum + X[i] ) / C_n[c_i]
 
     return C
 
@@ -45,10 +47,6 @@ def calc_dist(a, b):
         dist = dist + np.square(a[i]-b[i])
     return dist
 
-def update_center(center, sample, c_n):
-    return center
-
-
 def plotClusters(samples, groupings):
     # Separating x_1 and x_2 for clusters a and b
     x_1_a = np.array([])
@@ -63,11 +61,11 @@ def plotClusters(samples, groupings):
             x_1_b = np.append(x_1_b, samples[i][0])
             x_2_b = np.append(x_2_b, samples[i][1])
     # Plotting
-    plt.scatter(x_1_a, x_2_a, label = "test a")
-    plt.scatter(x_1_b, x_2_b, label = "test b")
-    plt.title("Samples")
-    plt.xlabel("x_1")
-    plt.ylabel("x_2")
+    plt.scatter(x_1_a, x_2_a, label='test a')
+    plt.scatter(x_1_b, x_2_b, label='test b')
+    plt.title('Samples')
+    plt.xlabel('x_1')
+    plt.ylabel('x_2')
     plt.legend()
     plt.show()
 
@@ -82,3 +80,4 @@ K = 3
 samples = np.array( [ [1, 0], [7, 4], [9, 6], [2, 1], [4, 8], [0, 3], [13, 5], [6, 8], [7, 3], [3, 6], [2, 1], [8, 3], [10, 2], [3, 5], [5, 1], [1, 9], [10, 3], [4, 1], [6, 6], [2, 2] ] )
 C = K_Means(X, K)
 print(C)
+
