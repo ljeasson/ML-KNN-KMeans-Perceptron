@@ -45,8 +45,9 @@ def calc_dist(a, b):
     # print("shape: ", )
     for i in range(a.shape[0]):
         dist = dist + np.square(a[i]-b[i])
-    return dist
+    return np.sqrt(dist)
 
+#unfinished
 def plotClusters(samples, groupings):
     # Separating x_1 and x_2 for clusters a and b
     x_1_a = np.array([])
@@ -73,11 +74,21 @@ def plotClusters(samples, groupings):
 # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ First Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 X = np.array( [[0], [1], [2], [7], [8], [9], [12], [14], [15]] )
 K = 3
-#C = K_Means(X, K)
-#print(C)
+C = K_Means(X, K)
+
+# Visuals for debugging
+print(C)
+y_c = np.ones((K,1))
+y_s = np.zeros((X.shape[0],1))
+
+for i in range(K):
+    plt.scatter(C, y_c, label='centers')
+    plt.scatter(X, y_s, label='samples')
+plt.title('X')
+plt.show()
 
 # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Second Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-samples = np.array( [ [1, 0], [7, 4], [9, 6], [2, 1], [4, 8], [0, 3], [13, 5], [6, 8], [7, 3], [3, 6], [2, 1], [8, 3], [10, 2], [3, 5], [5, 1], [1, 9], [10, 3], [4, 1], [6, 6], [2, 2] ] )
-C = K_Means(X, K)
-print(C)
+# X_2 = np.array( [ [1, 0], [7, 4], [9, 6], [2, 1], [4, 8], [0, 3], [13, 5], [6, 8], [7, 3], [3, 6], [2, 1], [8, 3], [10, 2], [3, 5], [5, 1], [1, 9], [10, 3], [4, 1], [6, 6], [2, 2] ] )
+#C_2 = K_Means_better(X_2, K)
+#print(C_2)
 
