@@ -1,11 +1,84 @@
 import numpy as np
+import matplotlib.pyplot as plt
+
+# class K_Means():
+#     def _init_(self, K, mean, )
+
 
 def K_Means(X,K):
-    return 0
+    n = X.shape[0]  # number of samples
+    f = X.shape[1]  # number of features
+
+    # Generate random centers
+    C = np.zeros([K,f])     # cluster centers, updated and returned by this function
+    C_n = np.zeros([K,f])   # number of samples in cluster of same index
+    for i in range(K):
+        x = np.random.randint(0, n)
+        if(x != C[i-1]):
+            C[i] = X[x]
+        else:
+            i -= 1
+
+    # For each sample
+    for i in range(X.shape[0]):
+        min_dist = 9999999999   # arbitrarily large initialization
+        c_i = 0                 # index of the center that sample X[i] belongs too 
+        for j in range(K):
+            dist = calc_dist(C[j], X[i])    # C[j] : center value being tried
+            if(dist < min_dist):
+                min_dist = dist
+                c_i = j
+        # Update the center
+        C[c_i] = update_center(C[c_i], X[i], C_n[c_i])
+
+    return C
 
 def K_Means_better(X,K):
     return 0
 
+def calc_dist(a, b):
+    dist = 0
+    # print("center: ", center)
+    # print("sample: ", sample)
+    # print("shape: ", )
+    for i in range(a.shape[0]):
+        dist = dist + np.square(a[i]-b[i])
+    return dist
+
+def update_center(center, sample, c_n):
+    return center
+
+
+def plotClusters(samples, groupings):
+    # Separating x_1 and x_2 for clusters a and b
+    x_1_a = np.array([])
+    x_2_a = np.array([])
+    x_1_b = np.array([])
+    x_2_b = np.array([])
+    for i in range(samples.shape[0]):
+        if (groupings[i] == 1):
+            x_1_a = np.append(x_1_a, samples[i][0])
+            x_2_a = np.append(x_2_a, samples[i][1])
+        else:
+            x_1_b = np.append(x_1_b, samples[i][0])
+            x_2_b = np.append(x_2_b, samples[i][1])
+    # Plotting
+    plt.scatter(x_1_a, x_2_a, label = "test a")
+    plt.scatter(x_1_b, x_2_b, label = "test b")
+    plt.title("Samples")
+    plt.xlabel("x_1")
+    plt.ylabel("x_2")
+    plt.legend()
+    plt.show()
+
+
+# print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ First Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 X = np.array( [[0], [1], [2], [7], [8], [9], [12], [14], [15]] )
 K = 3
+#C = K_Means(X, K)
+#print(C)
+
+# print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Second Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+samples = np.array( [ [1, 0], [7, 4], [9, 6], [2, 1], [4, 8], [0, 3], [13, 5], [6, 8], [7, 3], [3, 6], [2, 1], [8, 3], [10, 2], [3, 5], [5, 1], [1, 9], [10, 3], [4, 1], [6, 6], [2, 2] ] )
 C = K_Means(X, K)
+print(C)
