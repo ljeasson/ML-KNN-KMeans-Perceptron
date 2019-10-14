@@ -38,6 +38,7 @@ def perceptron_train(X,Y):
             bias = update_bias(bias, Y[sample])
 
     # Output weights and bias
+    print(weights," ",bias)
     return (weights, bias)
 
 
@@ -73,22 +74,21 @@ Y = np.array( [[1], [1], [1], [-1], [-1], [-1]] )
 W = perceptron_train(X,Y)
 test_acc = perceptron_test(X,Y,W[0],W[1])
 
-'''
+
 # Graph weight vector
 w1 = W[0][0]
 w2 = W[0][1]
 b  = W[1][0]
 print("W1:",w1," W2:",w2," b:",b)
 
-slope = -(b/w2)/(b/w1)  
-intercept = -b/w2
+#slope = -(b/w2)/(b/w1)  
+#intercept = -b/w2
 
 x = np.linspace(-3, 3, 10)
-y = slope*x + intercept
+y = (-3/2)*x + b
 
 plt.title('Graph of Resulting Weight Vector')
 plt.plot(x, y, '-r', label='')
 
 plt.show(block=False)
 input('press <ENTER> to continue')
-'''
