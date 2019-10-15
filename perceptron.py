@@ -78,68 +78,54 @@ def perceptron_train(X,Y):
 
 def perceptron_test(X_test, Y_test, w, b):
     score = 0
-    length = len(Y_test)
+    num_features_and_weights = X_test.shape[1]
+    num_samples = Y_test.shape[0]
+    redo_epoch = False
+    max_iter = 2
 
-    for i in range(len(Y_test)):
-        if w[0]*X_test[i][0] + w[1]*X_test[i][1] + b[0] == Y_test[i][0]:
+    '''
+    for i in range(num_samples):
+        activation = 0
+        
+        for j in range(num_features_and_weights):
+            activation += w[j]*X_test[i][j]
+        activation += b[0]
+
+        if activation == Y_test[i][0]:
             score += 1
+    '''
+    for i in range(num_samples):
+        activation = 0
+        
+        for j in range(num_features_and_weights):
+            activation += w[j]*X_test[i][j]
+        activation += b[0]
 
-    accuracy = score/length
-    #print(accuracy)
+        if activation == Y_test[i][0]:
+            score += 1
+        else:
+            for j in range(num_features_and_weights):
+                w[j] = update_weight(w[j], X_test[i][j], Y_test[i][0])
+            b[0] = update_bias(b[0], Y_test[i][0])
+            redo_epoch = True
+    '''
+    while (redo_epoch and max_iter > 0):
+        for i in range(num_samples):
+            activation = 0
+        
+            for j in range(num_features_and_weights):
+                activation += w[j]*X_test[i][j]
+            activation += b[0]
+
+            if activation == Y_test[i][0]:
+                score += 1
+            else:
+                for j in range(num_features_and_weights):
+                    w[j] = update_weight(w[j], X_test[i][j], Y_test[i][0])
+                b[0] = update_bias(b[0], Y_test[i][0])
+                redo_epoch = True
+        max_iter -= 1
+    '''
+
+    accuracy = score/num_samples
     return accuracy
-
-
-# Hand-Tested Data
-X = np.array( [[1,1], [1,-1], [-1,1], [-1,-1]] )
-Y = np.array( [[1], [-1], [-1], [-1]] )
-W = perceptron_train(X,Y)
-test_acc = perceptron_test(X,Y,W[0],W[1])
-w1 = W[0][0]
-w2 = W[0][1]
-b  = W[1][0]
-print("Hand-Tested Data    W1: ",w1,"  W2: ",w2,"  b:",b)
-
-# Percepton Test Data 1
-X = np.array( [[0,1], [1,0], [5,4], [1,1], [3,3], [2,4], [1,6]] )
-Y = np.array( [[1], [1], [-1], [1], [-1], [-1], [-1]] )
-W = perceptron_train(X,Y)
-test_acc = perceptron_test(X,Y,W[0],W[1])
-w1 = W[0][0]
-w2 = W[0][1]
-b  = W[1][0]
-print("Test Data 1         W1:",w1,"  W2:",w2,"  b: ",b)
-
-# Percepton Test Data 2
-X = np.array( [[0,1], [1,0], [5,4], [1,1], [3,3], [2,4], [1,6]])
-Y = np.array( [[1], [1], [-1], [1], [-1], [-1], [-1]] )
-W = perceptron_train(X, Y)
-test_acc = perceptron_test(X, Y, W[0], W[1])
-w1 = W[0][0]
-w2 = W[0][1]
-b  = W[1][0]
-print("Test Data 2         W1:",w1,"  W2:",w2,"  b: ",b)
-
-# Perceptron Test Data - Writeup
-X = np.array( [[-2,1], [1,1], [1.5,-0.5], [-2,-1], [-1,-1.5], [2,-2]] )
-Y = np.array( [[1], [1], [1], [-1], [-1], [-1]] )
-W = perceptron_train(X,Y)
-test_acc = perceptron_test(X,Y,W[0],W[1])
-w1 = W[0][0]
-w2 = W[0][1]
-b  = W[1][0]
-print("Writeup Test Data   W1: ",w1,"  W2: ",w2,"  b: ",b)
-
-'''
-# Graph weight vector
-#slope = -(b/w2)/(b/w1)  
-#intercept = -b/w2
-
-x = np.linspace(-3, 3, 10)
-y = (-3/2)*x + b
-
-plt.title('Graph of Resulting Weight Vector')
-plt.plot(x, y, '-r', label='')
-
-plt.show(block=False)
-input('press <ENTER> to continue')
-'''
