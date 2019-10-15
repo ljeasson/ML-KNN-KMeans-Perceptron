@@ -27,6 +27,7 @@ def perceptron_train(X,Y):
     weights = np.zeros(num_features, dtype=int)
     bias = 0
     
+    # Redo another epoch indicator
     redo_epoch = False
 
     # Calculate weights and bias
@@ -39,14 +40,18 @@ def perceptron_train(X,Y):
         
         # If y * a <= 0, update weights and bias
         if activation * current_label <= 0:
+            # Update weights
             for w in range(len(weights)):
                 weights[w] = update_weight(weights[w], X[sample][w], Y[sample])
             
+            # Update bias
             bias = update_bias(bias, Y[sample])
             
+            # Redo another epoch
             redo_epoch = True
         
     while (redo_epoch):
+        # Disable redo indicator
         redo_epoch = False
 
         # Calculate weights and bias
@@ -57,11 +62,14 @@ def perceptron_train(X,Y):
             
             # If y * a <= 0, update weights and bias
             if activation * current_label <= 0:
+                # Update weights
                 for w in range(len(weights)):
                     weights[w] = update_weight(weights[w], X[sample][w], Y[sample])
 
+                # Update bias
                 bias = update_bias(bias, Y[sample])
                 
+                # Redo another epoch
                 redo_epoch = True
             
     # Output weights and bias
@@ -80,6 +88,7 @@ def perceptron_test(X_test, Y_test, w, b):
     #print(accuracy)
     return accuracy
 
+
 # Hand-Tested Data
 X = np.array( [[1,1], [1,-1], [-1,1], [-1,-1]] )
 Y = np.array( [[1], [-1], [-1], [-1]] )
@@ -88,7 +97,7 @@ test_acc = perceptron_test(X,Y,W[0],W[1])
 w1 = W[0][0]
 w2 = W[0][1]
 b  = W[1][0]
-print("Han-Tested Data     W1:",w1,"  W2:",w2,"  b:",b)
+print("Hand-Tested Data    W1: ",w1,"  W2: ",w2,"  b:",b)
 
 # Percepton Test Data 1
 X = np.array( [[0,1], [1,0], [5,4], [1,1], [3,3], [2,4], [1,6]] )
@@ -98,7 +107,7 @@ test_acc = perceptron_test(X,Y,W[0],W[1])
 w1 = W[0][0]
 w2 = W[0][1]
 b  = W[1][0]
-print("Test Data 1         W1:",w1," W2:",w2," b:",b)
+print("Test Data 1         W1:",w1,"  W2:",w2,"  b: ",b)
 
 # Percepton Test Data 2
 X = np.array( [[0,1], [1,0], [5,4], [1,1], [3,3], [2,4], [1,6]])
@@ -108,8 +117,7 @@ test_acc = perceptron_test(X, Y, W[0], W[1])
 w1 = W[0][0]
 w2 = W[0][1]
 b  = W[1][0]
-print("Test Data 2         W1:",w1," W2:",w2," b:",b)
-
+print("Test Data 2         W1:",w1,"  W2:",w2,"  b: ",b)
 
 # Perceptron Test Data - Writeup
 X = np.array( [[-2,1], [1,1], [1.5,-0.5], [-2,-1], [-1,-1.5], [2,-2]] )
@@ -119,7 +127,7 @@ test_acc = perceptron_test(X,Y,W[0],W[1])
 w1 = W[0][0]
 w2 = W[0][1]
 b  = W[1][0]
-print("Writeup Test Data   W1:",w1,"  W2:",w2,"  b:",b)
+print("Writeup Test Data   W1: ",w1,"  W2: ",w2,"  b: ",b)
 
 '''
 # Graph weight vector
