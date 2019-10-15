@@ -14,6 +14,9 @@ def update_weight(weight, x, y):
 def update_bias(bias, y):
     return bias + y
 
+def epoch(X,Y,num_samples, weights, bias, redo_epoch):
+    return
+
 def perceptron_train(X,Y):
     # Number of samples and features
     num_samples = X.shape[0]
