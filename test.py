@@ -1,6 +1,29 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import perceptron as p
+import nearest_neighbors as knn
+
+# KNN TESTING
+X_train = np.array( [[1,5], [2,6], [2,7], [3,7], [3,8], [4,8], [5,1], [5,9], [6,2], [7,2], [7,3], [8,3], [8,4], [9,5]] )
+Y_train = np.array( [[-1], [-1], [1], [-1], [1], [-1], [1], [-1], [1], [-1], [1], [-1], [1], [1]] )
+
+X_test = np.array( [[1,1], [2,1], [0,10], [10,10], [5,5], [3,10], [9,4], [6,2], [2,2], [8,7]] )
+Y_test = np.array( [[1], [-1], [1], [-1], [1], [-1], [1], [-1], [1], [-1]] )
+
+acc_K1 = knn.KNN_test(X_train, Y_train, X_test, Y_test, 1)
+acc_K2 = knn.KNN_test(X_train, Y_train, X_test, Y_test, 3)
+acc_K3 = knn.KNN_test(X_train, Y_train, X_test, Y_test, 5)
+print("Accuracy 1:",acc_K1)
+print("Accuracy 2:",acc_K2)
+print("Accuracy 3:",acc_K3)
+print()
+
+best_K = knn.choose_K(X_train, Y_train, X_test, Y_test)
+print("Best K:",best_K)
+print()
+
+'''
+# PERCEPTRON TESTING
 
 # Hand-Tested Data
 X = np.array( [[1,1], [1,-1], [-1,1], [-1,-1]] )
@@ -43,3 +66,4 @@ plt.plot(x, y, '-r', label='')
 
 plt.show(block=False)
 input('press <ENTER> to continue')
+'''

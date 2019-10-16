@@ -26,7 +26,6 @@ def KNN_test(X_train, Y_train, X_test, Y_test, K):
 
         # Iterate throuhg all training data
         for j in range(train_length):
-            #print(X_test[0],X_train[j]) #Y_train[j]
             dist = euclidean_distance(X_test[i], X_train[j], num_features)
             distances.append([dist, Y_train[j][0]])
 
@@ -66,23 +65,25 @@ def KNN_test(X_train, Y_train, X_test, Y_test, K):
 
     # Calculate accuracy of test data
     accuracy = score / train_length
-    #print("Accuracy:",accuracy)
     return accuracy
 
 
 def choose_K(X_train,Y_train,X_val,Y_val):
-    return 0
+    # Initialize K and max K
+    K = 1
+    max_k = len(X_train)
+    # Dictionary of (k, accuracy) pairs
+    accuracies = {}
 
+    # Iterate from K=1 to K=(number of samples)
+    while K < max_k:
+        # Calculate accuracy and add to dictionary
+        current_acc = KNN_test(X_train, Y_train, X_val, Y_val, K)
+        accuracies[K] = current_acc
+        K += 1
 
-X_train = np.array( [[1,5], [2,6], [2,7], [3,7], [3,8], [4,8], [5,1], [5,9], [6,2], [7,2], [7,3], [8,3], [8,4], [9,5]] )
-Y_train = np.array( [[-1], [-1], [1], [-1], [1], [-1], [1], [-1], [1], [-1], [1], [-1], [1], [1]] )
+    # Get K value with maximum accuracy
+    best_acc = max(accuracies.values())
+    best_K = [k for k, v in accuracies.items() if v == best_acc][0]
 
-X_test = np.array( [[1,1], [2,1], [0,10], [10,10], [5,5], [3,10], [9,4], [6,2], [2,2], [8,7]] )
-Y_test = np.array( [[1], [-1], [1], [-1], [1], [-1], [1], [-1], [1], [-1]] )
-
-acc_K1 = KNN_test(X_train, Y_train, X_test, Y_test, 1)
-acc_K2 = KNN_test(X_train, Y_train, X_test, Y_test, 3)
-acc_K3 = KNN_test(X_train, Y_train, X_test, Y_test, 5)
-print("Accuracy 1:",acc_K1)
-print("Accuracy 2:",acc_K2)
-print("Accuracy 3:",acc_K3)
+    return best_K
