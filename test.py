@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 import perceptron as p
 
 # Hand-Tested Data
@@ -9,19 +10,11 @@ print("Hand-Tested Data    W1: ",W[0][0],"  W2: ",W[0][1],"  b:",W[1][0])
 test_acc = p.perceptron_test(X,Y,W[0],W[1])
 print("Accurancy:",test_acc,"\n")
 
-# Percepton Test Data 1
+# Percepton Test Data 
 X = np.array( [[0,1], [1,0], [5,4], [1,1], [3,3], [2,4], [1,6]] )
 Y = np.array( [[1], [1], [-1], [1], [-1], [-1], [-1]] )
 W = p.perceptron_train(X,Y)
-print("Hand-Tested Data    W1: ",W[0][0],"  W2: ",W[0][1],"  b:",W[1][0])
-test_acc = p.perceptron_test(X,Y,W[0],W[1])
-print("Accurancy:",test_acc,"\n")
-
-# Percepton Test Data 2
-X = np.array( [[0,1], [1,0], [5,4], [1,1], [3,3], [2,4], [1,6]])
-Y = np.array( [[1], [1], [-1], [1], [-1], [-1], [-1]] )
-W = p.perceptron_train(X,Y)
-print("Hand-Tested Data    W1: ",W[0][0],"  W2: ",W[0][1],"  b:",W[1][0])
+print("Preceptron Test Data 1    W1: ",W[0][0],"  W2: ",W[0][1],"  b:",W[1][0])
 test_acc = p.perceptron_test(X,Y,W[0],W[1])
 print("Accurancy:",test_acc,"\n")
 
@@ -29,21 +22,24 @@ print("Accurancy:",test_acc,"\n")
 X = np.array( [[-2,1], [1,1], [1.5,-0.5], [-2,-1], [-1,-1.5], [2,-2]] )
 Y = np.array( [[1], [1], [1], [-1], [-1], [-1]] )
 W = p.perceptron_train(X,Y)
-print("Hand-Tested Data    W1: ",W[0][0],"  W2: ",W[0][1],"  b:",W[1][0])
+print("Preceptron Test Data 2    W1: ",W[0][0],"  W2: ",W[0][1],"  b:",W[1][0])
 test_acc = p.perceptron_test(X,Y,W[0],W[1])
 print("Accurancy:",test_acc,"\n")
 
-'''
+
 # Graph weight vector
-#slope = -(b/w2)/(b/w1)  
-#intercept = -b/w2
+w1 = W[0][0]
+w2 = W[0][1]
+b  = W[1][0]
+
+slope = -(b/w2)/(b/w1)  
+intercept = -b/w2
 
 x = np.linspace(-3, 3, 10)
-y = (-3/2)*x + b
+y = slope*x + intercept
 
-plt.title('Graph of Resulting Weight Vector')
+plt.title('Graph of Decision Boundary')
 plt.plot(x, y, '-r', label='')
 
 plt.show(block=False)
 input('press <ENTER> to continue')
-'''

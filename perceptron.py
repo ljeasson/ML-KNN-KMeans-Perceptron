@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
 def calculate_activation(features, weights, bias):
     a = 0
@@ -14,8 +13,13 @@ def update_weight(weight, x, y):
 def update_bias(bias, y):
     return bias + y
 
-def epoch(X,Y,num_samples, weights, bias, redo_epoch):
-    return
+def prediction(activation):
+    prediction = 0
+
+    if   activation > 0: prediction = 1
+    elif activation < 0: prediction = -1
+    
+    return prediction
 
 def perceptron_train(X,Y):
     # Number of samples and features
@@ -29,9 +33,6 @@ def perceptron_train(X,Y):
     
     # Redo another epoch indicator
     redo_epoch = False
-
-    # Calculate weights and bias
-    #epoch(X,Y,num_samples, weights, bias, redo_epoch)
 
     for sample in range(num_samples):
         # Calculate activation and set current label
@@ -77,55 +78,31 @@ def perceptron_train(X,Y):
 
 
 def perceptron_test(X_test, Y_test, w, b):
+    # Initialize score (for accuracy calculation),
+    # number of features and weights, 
+    # and number of samples
     score = 0
     num_features_and_weights = X_test.shape[1]
     num_samples = Y_test.shape[0]
-    redo_epoch = False
-    max_iter = 2
-
-    '''
+    
+    # Iterate through all samples in dataset
     for i in range(num_samples):
         activation = 0
         
+        # Calculate the activation for each sample
         for j in range(num_features_and_weights):
             activation += w[j]*X_test[i][j]
         activation += b[0]
 
-        if activation == Y_test[i][0]:
+        # Make prediction
+        # If activation is less than 0, predict -1
+        # If activation is greater than 0, predict 1
+        # Otherwise, predict 0
+        # Update score if prediction and 
+        # current label match
+        if prediction(activation) == Y_test[i][0]:
             score += 1
-    '''
-    for i in range(num_samples):
-        activation = 0
-        
-        for j in range(num_features_and_weights):
-            activation += w[j]*X_test[i][j]
-        activation += b[0]
 
-        if activation == Y_test[i][0]:
-            score += 1
-        else:
-            for j in range(num_features_and_weights):
-                w[j] = update_weight(w[j], X_test[i][j], Y_test[i][0])
-            b[0] = update_bias(b[0], Y_test[i][0])
-            redo_epoch = True
-    '''
-    while (redo_epoch and max_iter > 0):
-        for i in range(num_samples):
-            activation = 0
-        
-            for j in range(num_features_and_weights):
-                activation += w[j]*X_test[i][j]
-            activation += b[0]
-
-            if activation == Y_test[i][0]:
-                score += 1
-            else:
-                for j in range(num_features_and_weights):
-                    w[j] = update_weight(w[j], X_test[i][j], Y_test[i][0])
-                b[0] = update_bias(b[0], Y_test[i][0])
-                redo_epoch = True
-        max_iter -= 1
-    '''
-
+    # Calculate and return accuracy
     accuracy = score/num_samples
     return accuracy
