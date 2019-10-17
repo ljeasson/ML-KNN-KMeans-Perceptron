@@ -13,16 +13,16 @@ Y_test = np.array( [[1], [-1], [1], [-1], [1], [-1], [1], [-1], [1], [-1]] )
 acc_K1 = knn.KNN_test(X_train, Y_train, X_test, Y_test, 1)
 acc_K2 = knn.KNN_test(X_train, Y_train, X_test, Y_test, 3)
 acc_K3 = knn.KNN_test(X_train, Y_train, X_test, Y_test, 5)
-print("Accuracy 1:",acc_K1)
-print("Accuracy 2:",acc_K2)
-print("Accuracy 3:",acc_K3)
+print("Accuracy K=1:",acc_K1)
+print("Accuracy K=3:",acc_K2)
+print("Accuracy K=5:",acc_K3)
 print()
 
 best_K = knn.choose_K(X_train, Y_train, X_test, Y_test)
-print("Best K:",best_K)
+print("Best K:",best_K,"\n")
 print()
 
-'''
+
 # PERCEPTRON TESTING
 
 # Hand-Tested Data
@@ -66,4 +66,3 @@ plt.plot(x, y, '-r', label='')
 
 plt.show(block=False)
 input('press <ENTER> to continue')
-'''
