@@ -97,20 +97,6 @@ def plotClusters(X,C):
 
 # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Test Zone (Ignore) (it's just me learning python lol) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
-# X = np.array( [ [1, 0], [7, 4], [9, 6], [2, 1], [4, 8], [0, 3], [13, 5], [6, 8], [7, 3], [3, 6], [2, 1], [8, 3], [10, 2], [3, 5], [5, 1], [1, 9], [10, 3], [4, 1], [6, 6], [2, 2] ] )
-# K = 2
-# f = 3
-# n = 20                     # minimum number of times to run K_Means(X,K)
-# sets = np.zeros((K,f,n))    # hold generated n cluster sets of shape [K,f]
-# set_counts = np.zeros(n)    # how many times some cluster set is returned
-
-# print("X: \n", X)
-# print("K: \n", K)
-# print("f: \n", f)
-# print("n: \n", n)
-# print("sets: \n", sets)
-# print("set_counts: \n", set_counts)
-
 # a = np.array([[[1,2], [4,5]], [[1,2], [4,5]]])
 # b = np.array([[[1,2], [4,5]], [[2,2], [4,5]]])
 # c = np.zeros((4,2,3))
@@ -122,7 +108,6 @@ def plotClusters(X,C):
 # print("c[]: \n", c[1])
 
 # print("d: \n", d)
-
 
 # if(np.array_equal(a[1,0,0],b[1,0,0])):
 #     print("Yes")
