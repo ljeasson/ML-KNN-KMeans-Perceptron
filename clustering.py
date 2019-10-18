@@ -9,18 +9,21 @@ def K_Means(X,K):
     n = X.shape[0]  # number of samples
     f = X.shape[1]  # number of features
 
-    # Generate random centers
+    # Generate random indeces for centers
     C = np.zeros([K,f])     # cluster centers, updated and returned by this function
     C_n = np.zeros([K,f])   # number of samples in cluster of same index
     for i in range(K):
+        print("here", i)
         x = np.random.randint(0, n)
-        if(x != C[i-1]):
+        if(x != C[i-1]):    # if same number, regenerate (so we have unique centers)
             C[i] = X[x]
         else:
             i -= 1
 
     # For each sample
+    print("X.shape[0]: ", X.shape[0])
     for i in range(X.shape[0]):
+        print("i: ", i)
         min_dist = 9999999999   # arbitrarily large initialization
         c_i = 0                 # index of the center that sample X[i] belongs too 
         for j in range(K):
@@ -36,7 +39,33 @@ def K_Means(X,K):
     return C
 
 def K_Means_better(X,K):
-    return 0
+    f = X.shape[1]              # number of features
+    n = 200                     # minimum number of times to run K_Means(X,K)
+    sets = np.zeros((n, K, f))  # generated sets of cluster centers, n sets of shape [K,f]
+    counts = np.zeros(n)        # how many times some cluster set is returned
+
+    # Generate cluster centers many times
+    # Run minimum number of times, then start checking if a set of cluster centers is a majority
+    while (np.sum(counts) < n) or (np.amax(counts) / np.sum(counts) <= .5) :
+        # Generate clusters
+        C = K_Means(X, K)
+        # Compare against every previously generated set of cluster centers
+        for i in range(n):
+            # If same as one generated before, add to that one's count
+            if( np.array_equal(C, sets[i]) ):
+                counts[i] += 1
+                break
+            # If not and this set of cluster centers is empty (all zeroes), fill it in
+            elif ( np.arr_equal(sets[i], np.zeros([K,f])) ):
+                sets[i] = C
+                counts[i] += 0
+                break
+            # If we're out of room, attach it
+            else:
+                sets = np.append(sets, [C], axis=0)
+                break
+    # return the set cluster centers with the most returns
+    return sets[(numpy.where(sets == np.amax(counts)))]
 
 def calc_dist(a, b):
     dist = 0
@@ -47,7 +76,7 @@ def calc_dist(a, b):
         dist = dist + np.square(a[i]-b[i])
     return np.sqrt(dist)
 
-#unfinished
+# unfinished
 def plotClusters(samples, groupings):
     # Separating x_1 and x_2 for clusters a and b
     x_1_a = np.array([])
@@ -71,24 +100,62 @@ def plotClusters(samples, groupings):
     plt.show()
 
 
+
+# print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Test Zone ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+
+# X = np.array( [ [1, 0], [7, 4], [9, 6], [2, 1], [4, 8], [0, 3], [13, 5], [6, 8], [7, 3], [3, 6], [2, 1], [8, 3], [10, 2], [3, 5], [5, 1], [1, 9], [10, 3], [4, 1], [6, 6], [2, 2] ] )
+# K = 2
+# f = 3
+# n = 20                     # minimum number of times to run K_Means(X,K)
+# sets = np.zeros((K,f,n))    # hold generated n cluster sets of shape [K,f]
+# set_counts = np.zeros(n)    # how many times some cluster set is returned
+
+# print("X: \n", X)
+# print("K: \n", K)
+# print("f: \n", f)
+# print("n: \n", n)
+# print("sets: \n", sets)
+# print("set_counts: \n", set_counts)
+
+# a = np.array([[[1,2], [4,5]], [[1,2], [4,5]]])
+# b = np.array([[[1,2], [4,5]], [[2,2], [4,5]]])
+# c = np.zeros((4,2,3))
+# print("c: \n", c)
+# p = np.array([[1,2,1],[4,5,4]])
+# d = np.array(p)
+# c = np.append(c, [d], axis=0)
+# print("c: \n", c)
+# print("c[]: \n", c[1])
+
+# print("d: \n", d)
+
+
+# if(np.array_equal(a[1,0,0],b[1,0,0])):
+#     print("Yes")
+# else:
+#     print("No")
+
+
+
 # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ First Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-X = np.array( [[0], [1], [2], [7], [8], [9], [12], [14], [15]] )
-K = 3
-C = K_Means(X, K)
+# X = np.array( [[0], [1], [2], [7], [8], [9], [12], [14], [15]] )
+# K = 3
+# C = K_Means(X, K)
 
-# Visuals for debugging
-print(C)
-y_c = np.ones((K,1))
-y_s = np.zeros((X.shape[0],1))
+# # Visuals for debugging
+# print(C)
+# y_c = np.ones((K,1))
+# y_s = np.zeros((X.shape[0],1))
 
-for i in range(K):
-    plt.scatter(C, y_c, label='centers')
-    plt.scatter(X, y_s, label='samples')
-plt.title('X')
-plt.show()
+# for i in range(K):
+#     plt.scatter(C, y_c, label='centers')
+#     plt.scatter(X, y_s, label='samples')
+# plt.title('X')
+# plt.show()
 
-# print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Second Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-# X_2 = np.array( [ [1, 0], [7, 4], [9, 6], [2, 1], [4, 8], [0, 3], [13, 5], [6, 8], [7, 3], [3, 6], [2, 1], [8, 3], [10, 2], [3, 5], [5, 1], [1, 9], [10, 3], [4, 1], [6, 6], [2, 2] ] )
-#C_2 = K_Means_better(X_2, K)
-#print(C_2)
+print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Second Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+X_2 = np.array( [ [1, 0], [7, 4], [9, 6], [2, 1], [4, 8], [0, 3], [13, 5], [6, 8], [7, 3], [3, 6], [2, 1], [8, 3], [10, 2], [3, 5], [5, 1], [1, 9], [10, 3], [4, 1], [6, 6], [2, 2] ] )
+K_2 = 2
+C_2 = K_Means_better(X_2, K_2)
+print(C_2)
 
