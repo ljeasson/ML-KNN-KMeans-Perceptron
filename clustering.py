@@ -1,11 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# class K_Means():
-#     def _init_(self, K, mean, )
-
-
-def K_Means(X,K):
+# K_Means(X, K) , X is samples, K is number of clusters
+#   Computes K cluster centers based on Euclidean distance
+#     1. Generates unique random indexes to use as initial cluster centers
+#     2. Assigns each sample to a cluster center based on smallest Euclidean distance using calc_dist()
+#     3. Updates cluster center as a sample is added to its cluster
+#     4. Returns cluster centers
+def K_Means(X, K):
     n = X.shape[0]  # number of samples
     f = X.shape[1]  # number of features
 
@@ -24,13 +26,13 @@ def K_Means(X,K):
         if(X[x] not in C):    # if already a random center, set back i to regenerate (so we have unique centers)
             C[i] = X[x]
             i += 1
-            
+
     # print("C: \n", C)
     # For each sample, assign to a center and update that center
     for i in range(X.shape[0]):
         min_dist = 9999999999   # arbitrarily large initialization
         c_i = 0                 # index of the center that sample X[i] belongs too
-        # choose a center c_i that sample X[i] is closest to 
+        # choose a center c_i that sample X[i] is closest to
         for j in range(K):
             dist = calc_dist(C[j], X[i])    # C[j] : center value being tried
             if(dist < min_dist):
@@ -45,19 +47,19 @@ def K_Means(X,K):
 
 def K_Means_better(X,K):
     f = X.shape[1]              # number of features
-    n = 200                     # minimum number of times to run K_Means(X,K)
-    sets = np.empty((n, K, f))  # generated sets of cluster centers, n sets of shape [K,f]
+    n = 20                      # minimum number of times to run K_Means(X,K)
+    sets = np.zeros((n, K, f))  # generated sets of cluster centers, n sets of shape [K,f]
     counts = np.zeros(n)        # how many times some cluster set is returned
 
     # Generate cluster centers many times
     # Run minimum number of times, then start checking if a set of cluster centers is a majority
-    print("here0")
+    # print("here0")
     while (np.sum(counts) < n) or (np.amax(counts) / np.sum(counts) <= .5) :
         if np.sum(counts) > 198 :
             print(np.amax(counts) / np.sum(counts))
         # Generate clusters
         C = K_Means(X, K)
-        # print("C: \n", C)
+        print("C: \n", C)
         # Compare against every previously generated set of cluster centers
         for i in range(n):
             # If same as one generated before, add to that one's count
@@ -74,45 +76,26 @@ def K_Means_better(X,K):
                 sets = np.append(sets, [C], axis=0)
                 break
     # return the set cluster centers with the most returns
-    print("max: ", np.amax(counts))
-    print("here")
-    return sets[(np.where(sets == np.amax(counts)))]
+    print("counts: ", counts)
+    print("sets: ", sets)
+    return sets[0:1]
 
+# calc_dist(a,n) , a is a point, b is a point
+#     Finds Euclidean distance between two points
 def calc_dist(a, b):
     dist = 0
-    # print("center: ", center)
-    # print("sample: ", sample)
-    # print("shape: ", )
     for i in range(a.shape[0]):
         dist = dist + np.square(a[i]-b[i])
     return np.sqrt(dist)
 
 # unfinished
-def plotClusters(samples, groupings):
-    # Separating x_1 and x_2 for clusters a and b
-    x_1_a = np.array([])
-    x_2_a = np.array([])
-    x_1_b = np.array([])
-    x_2_b = np.array([])
-    for i in range(samples.shape[0]):
-        if (groupings[i] == 1):
-            x_1_a = np.append(x_1_a, samples[i][0])
-            x_2_a = np.append(x_2_a, samples[i][1])
-        else:
-            x_1_b = np.append(x_1_b, samples[i][0])
-            x_2_b = np.append(x_2_b, samples[i][1])
-    # Plotting
-    plt.scatter(x_1_a, x_2_a, label='test a')
-    plt.scatter(x_1_b, x_2_b, label='test b')
-    plt.title('Samples')
-    plt.xlabel('x_1')
-    plt.ylabel('x_2')
-    plt.legend()
-    plt.show()
+def plotClusters(X,C):
+    return 0
+    
 
 
 
-# print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Test Zone ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+# print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Test Zone (Ignore) (it's just me learning python lol) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
 # X = np.array( [ [1, 0], [7, 4], [9, 6], [2, 1], [4, 8], [0, 3], [13, 5], [6, 8], [7, 3], [3, 6], [2, 1], [8, 3], [10, 2], [3, 5], [5, 1], [1, 9], [10, 3], [4, 1], [6, 6], [2, 2] ] )
 # K = 2
@@ -147,19 +130,16 @@ def plotClusters(samples, groupings):
 #     print("No")
 
 
-
 # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ First Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 # X = np.array( [[0], [1], [2], [7], [8], [9], [12], [14], [15]] )
 # K = 3
 # C = K_Means(X, K)
 
-# Visuals for debugging
-# print("C_: \n", C)
-# y_c = np.ones((K,1))
-# y_s = np.zeros((X.shape[0],1))
-# for i in range(K):
-#     plt.scatter(C, y_c, label='centers')
-#     plt.scatter(X, y_s, label='samples')
+# # Visuals for debugging
+# print("X: \n", X)
+# print("C: \n", C)
+# plt.scatter(C, np.ones((C.shape[0],1)), label='centers')
+# plt.scatter(X, np.zeros((X.shape[0],1)), label='samples')
 # plt.title('X')
 # plt.show()
 
@@ -168,5 +148,10 @@ X_2 = np.array( [ [1, 0], [7, 4], [9, 6], [2, 1], [4, 8], [0, 3], [13, 5], [6, 8
 K_2 = 2
 C_2 = K_Means_better(X_2, K_2)
 
-print(C_2)
-
+# Visuals for debugging
+print("X_2: \n", X_2)
+print("C_2: \n", C_2)
+plt.scatter(C_2[:,0], C_2[:,1], label='centers')
+plt.scatter(X_2[:,0], X_2[:,1], label='samples')
+plt.title('X_2')
+plt.show()
