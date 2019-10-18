@@ -9,21 +9,23 @@ def K_Means(X,K):
     n = X.shape[0]  # number of samples
     f = X.shape[1]  # number of features
 
-    print("n: ", n, "\tf: ", f, "\tK: ", K)
+    # print("n: ", n, "\tf: ", f, "\tK: ", K)
 
     # Generate random indeces for centers
     C = np.empty([K,f])     # cluster centers, updated and returned by this function
     C_n = np.zeros(K)       # number of samples in cluster of same index
-    print("Cz: \n", C)
+    # print("Cz: \n", C)
+
     i = 0
     while i < K :
         x = np.random.randint(0, n)
-        print("x: ", x, ",\ti: ", i)
+        # print("x: ", x, ",\ti: ", i)
+        # print("X[x]: \n", X[x])
         if(X[x] not in C):    # if already a random center, set back i to regenerate (so we have unique centers)
             C[i] = X[x]
             i += 1
             
-    print("C: \n", C)
+    # print("C: \n", C)
     # For each sample, assign to a center and update that center
     for i in range(X.shape[0]):
         min_dist = 9999999999   # arbitrarily large initialization
@@ -44,14 +46,18 @@ def K_Means(X,K):
 def K_Means_better(X,K):
     f = X.shape[1]              # number of features
     n = 200                     # minimum number of times to run K_Means(X,K)
-    sets = np.zeros((n, K, f))  # generated sets of cluster centers, n sets of shape [K,f]
+    sets = np.empty((n, K, f))  # generated sets of cluster centers, n sets of shape [K,f]
     counts = np.zeros(n)        # how many times some cluster set is returned
 
     # Generate cluster centers many times
     # Run minimum number of times, then start checking if a set of cluster centers is a majority
+    print("here0")
     while (np.sum(counts) < n) or (np.amax(counts) / np.sum(counts) <= .5) :
+        if np.sum(counts) > 198 :
+            print(np.amax(counts) / np.sum(counts))
         # Generate clusters
         C = K_Means(X, K)
+        # print("C: \n", C)
         # Compare against every previously generated set of cluster centers
         for i in range(n):
             # If same as one generated before, add to that one's count
@@ -59,7 +65,7 @@ def K_Means_better(X,K):
                 counts[i] += 1
                 break
             # If not and this set of cluster centers is empty (all zeroes), fill it in
-            elif ( np.arr_equal(sets[i], np.zeros([K,f])) ):
+            elif ( np.array_equal(sets[i], np.zeros([K,f])) ):
                 sets[i] = C
                 counts[i] += 0
                 break
@@ -68,7 +74,9 @@ def K_Means_better(X,K):
                 sets = np.append(sets, [C], axis=0)
                 break
     # return the set cluster centers with the most returns
-    return sets[(numpy.where(sets == np.amax(counts)))]
+    print("max: ", np.amax(counts))
+    print("here")
+    return sets[(np.where(sets == np.amax(counts)))]
 
 def calc_dist(a, b):
     dist = 0
@@ -140,13 +148,13 @@ def plotClusters(samples, groupings):
 
 
 
-print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ First Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-X = np.array( [[0], [1], [2], [7], [8], [9], [12], [14], [15]] )
-K = 3
-C = K_Means(X, K)
+# print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ First Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+# X = np.array( [[0], [1], [2], [7], [8], [9], [12], [14], [15]] )
+# K = 3
+# C = K_Means(X, K)
 
 # Visuals for debugging
-print("C_: \n", C)
+# print("C_: \n", C)
 # y_c = np.ones((K,1))
 # y_s = np.zeros((X.shape[0],1))
 # for i in range(K):
@@ -155,9 +163,10 @@ print("C_: \n", C)
 # plt.title('X')
 # plt.show()
 
-# print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Second Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-# X_2 = np.array( [ [1, 0], [7, 4], [9, 6], [2, 1], [4, 8], [0, 3], [13, 5], [6, 8], [7, 3], [3, 6], [2, 1], [8, 3], [10, 2], [3, 5], [5, 1], [1, 9], [10, 3], [4, 1], [6, 6], [2, 2] ] )
-# K_2 = 2
-# C_2 = K_Means_better(X_2, K_2)
-# print(C_2)
+print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Second Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+X_2 = np.array( [ [1, 0], [7, 4], [9, 6], [2, 1], [4, 8], [0, 3], [13, 5], [6, 8], [7, 3], [3, 6], [2, 1], [8, 3], [10, 2], [3, 5], [5, 1], [1, 9], [10, 3], [4, 1], [6, 6], [2, 2] ] )
+K_2 = 2
+C_2 = K_Means_better(X_2, K_2)
+
+print(C_2)
 
