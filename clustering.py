@@ -9,23 +9,26 @@ def K_Means(X,K):
     n = X.shape[0]  # number of samples
     f = X.shape[1]  # number of features
 
-    # Generate random indeces for centers
-    C = np.zeros([K,f])     # cluster centers, updated and returned by this function
-    C_n = np.zeros([K,f])   # number of samples in cluster of same index
-    for i in range(K):
-        print("here", i)
-        x = np.random.randint(0, n)
-        if(x != C[i-1]):    # if same number, regenerate (so we have unique centers)
-            C[i] = X[x]
-        else:
-            i -= 1
+    print("n: ", n, "\tf: ", f, "\tK: ", K)
 
-    # For each sample
-    print("X.shape[0]: ", X.shape[0])
+    # Generate random indeces for centers
+    C = np.empty([K,f])     # cluster centers, updated and returned by this function
+    C_n = np.zeros(K)       # number of samples in cluster of same index
+    print("Cz: \n", C)
+    i = 0
+    while i < K :
+        x = np.random.randint(0, n)
+        print("x: ", x, ",\ti: ", i)
+        if(X[x] not in C):    # if already a random center, set back i to regenerate (so we have unique centers)
+            C[i] = X[x]
+            i += 1
+            
+    print("C: \n", C)
+    # For each sample, assign to a center and update that center
     for i in range(X.shape[0]):
-        print("i: ", i)
         min_dist = 9999999999   # arbitrarily large initialization
-        c_i = 0                 # index of the center that sample X[i] belongs too 
+        c_i = 0                 # index of the center that sample X[i] belongs too
+        # choose a center c_i that sample X[i] is closest to 
         for j in range(K):
             dist = calc_dist(C[j], X[i])    # C[j] : center value being tried
             if(dist < min_dist):
@@ -137,25 +140,24 @@ def plotClusters(samples, groupings):
 
 
 
-# print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ First Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-# X = np.array( [[0], [1], [2], [7], [8], [9], [12], [14], [15]] )
-# K = 3
-# C = K_Means(X, K)
+print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ First Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+X = np.array( [[0], [1], [2], [7], [8], [9], [12], [14], [15]] )
+K = 3
+C = K_Means(X, K)
 
-# # Visuals for debugging
-# print(C)
+# Visuals for debugging
+print("C_: \n", C)
 # y_c = np.ones((K,1))
 # y_s = np.zeros((X.shape[0],1))
-
 # for i in range(K):
 #     plt.scatter(C, y_c, label='centers')
 #     plt.scatter(X, y_s, label='samples')
 # plt.title('X')
 # plt.show()
 
-print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Second Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-X_2 = np.array( [ [1, 0], [7, 4], [9, 6], [2, 1], [4, 8], [0, 3], [13, 5], [6, 8], [7, 3], [3, 6], [2, 1], [8, 3], [10, 2], [3, 5], [5, 1], [1, 9], [10, 3], [4, 1], [6, 6], [2, 2] ] )
-K_2 = 2
-C_2 = K_Means_better(X_2, K_2)
-print(C_2)
+# print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Second Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+# X_2 = np.array( [ [1, 0], [7, 4], [9, 6], [2, 1], [4, 8], [0, 3], [13, 5], [6, 8], [7, 3], [3, 6], [2, 1], [8, 3], [10, 2], [3, 5], [5, 1], [1, 9], [10, 3], [4, 1], [6, 6], [2, 2] ] )
+# K_2 = 2
+# C_2 = K_Means_better(X_2, K_2)
+# print(C_2)
 
