@@ -81,17 +81,12 @@ def K_Means_better(X,K):
     return sets[0:1]
 
 # calc_dist(a,n) , a is a point, b is a point
-#     Finds Euclidean distance between two points
+#   Finds Euclidean distance between two points
 def calc_dist(a, b):
     dist = 0
     for i in range(a.shape[0]):
         dist = dist + np.square(a[i]-b[i])
     return np.sqrt(dist)
-
-# unfinished
-def plotClusters(X,C):
-    return 0
-    
 
 
 
