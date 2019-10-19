@@ -53,8 +53,6 @@ def K_Means(X, K):
 #     3. Run K_Means(X,K) many times
 #     4. Run until set of cluster centers is returned a majority of the time
 #     5. Return that set of cluster centers
-
-
 def K_Means_better(X,K):
     f = X.shape[1]              # number of features
     n = 20                      # minimum number of times to run K_Means(X,K), 20 is arbitrary
@@ -84,7 +82,7 @@ def K_Means_better(X,K):
             # If we're out of room, attach it
             else:
                 sets = np.append(sets, [C], axis=0)
-                #counts = np.append(counts, 1)
+                # counts = np.append(counts, 1)
                 break
     majority = np.argmax(counts)        #index of set of cluster centers with majority
     # #Debugging, show variables
@@ -103,42 +101,17 @@ def calc_dist(a, b):
         dist = dist + np.square(a[i]-b[i])
     return np.sqrt(dist)
 
-
-
-# print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Test Zone (Ignore) (it's just me learning python lol) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-
-# a = np.array([[[1,2], [4,5]], [[1,2], [4,5]]])
-# b = np.array([[[1,2], [4,5]], [[2,2], [4,5]]])
-# c = np.zeros((4,2,3))
-# print("c: \n", c)
-# p = np.array([[1,2,1],[4,5,4]])
-# d = np.array(p)
-# c = np.append(c, [d], axis=0)
-# print("c: \n", c)
-# print("c[4]: \n", c[4])
-
-# print("d: \n", d)
-
-# if(np.array_equal(a[1,0,0],b[1,0,0])):
-#     print("Yes")
-# else:
-#     print("No")
-# n = 10
-# z = np.zeros(n)
-# zop = np.append(z,1)
-# print("zop: \n", zop)
-
 # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ First Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-X = np.array( [[0], [1], [2], [7], [8], [9], [12], [14], [15]] )
-K = 3
-C = K_Means(X, K)
+# X = np.array( [[0], [1], [2], [7], [8], [9], [12], [14], [15]] )
+# K = 3
+# C = K_Means(X, K)
 
 # # Visuals for debugging
 # print("X: \n", X)
 # print("C: \n", C)
 # plt.scatter(C, np.ones((C.shape[0],1)), label='centers')
 # plt.scatter(X, np.zeros((X.shape[0],1)), label='samples')
-# plt.title('X')
+# plt.title('X, K=3')
 # plt.show()
 
 # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Second Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
@@ -150,5 +123,14 @@ C_2 = K_Means_better(X_2, K_2)
 # print("C_2: \n", C_2)
 # plt.scatter(C_2[:,0], C_2[:,1], label='centers')
 # plt.scatter(X_2[:,0], X_2[:,1], label='samples')
-# plt.title('X_2')
+# plt.title('X_2, K=2')
+# plt.show()
+
+K_3 = 3
+C_3 = K_Means_better(X_2, K_3)
+# # Visuals for debugging
+# print("C_3: \n", C_3)
+# plt.scatter(C_3[:,0], C_3[:,1], label='centers')
+# plt.scatter(X_2[:,0], X_2[:,1], label='samples')
+# plt.title('X_2, K=3')
 # plt.show()
