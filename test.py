@@ -29,7 +29,7 @@ X = np.array( [[0], [1], [2], [7], [8], [9], [12], [14], [15]] )
 K = 3
 C = km.K_Means(X, K)
 
-# Visuals for debugging, Uncomment matplot header in clustering.py to use
+# Visuals for debugging, Uncomment matplot header to use
 print("C: \n", C)
 plt.scatter(C, np.ones((C.shape[0],1)), label='centers')
 plt.scatter(X, np.zeros((X.shape[0],1)), label='samples')
@@ -42,7 +42,7 @@ X_2 = np.array( [ [1, 0], [7, 4], [9, 6], [2, 1], [4, 8], [0, 3], [13, 5], [6, 8
 K_2 = 2
 C_2 = km.K_Means_better(X_2, K_2)
 
-# Visuals for debugging, Uncomment matplot header in clustering.py to use
+# Visuals for debugging, Uncomment matplot header to use
 print("C_2: \n", C_2)
 plt.scatter(C_2[:,0], C_2[:,1], label='centers')
 plt.scatter(X_2[:,0], X_2[:,1], label='samples')
@@ -53,7 +53,7 @@ plt.show()
 
 K_3 = 3
 C_3 = km.K_Means_better(X_2, K_3)
-# Visuals for debugging, Uncomment matplot header in clustering.py to use
+# Visuals for debugging, Uncomment matplot header to use
 print("C_3: \n", C_3)
 plt.scatter(C_3[:,0], C_3[:,1], label='centers')
 plt.scatter(X_2[:,0], X_2[:,1], label='samples')

@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt   #Uncomment to use Visuals for debugging
 
 # K_Means(X, K) , X is samples, K is number of clusters
 #   Returns a set of K cluster centers based on Euclidean distance
