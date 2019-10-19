@@ -45,9 +45,10 @@ def K_Means(X, K):
 
     return C
 
+
 def K_Means_better(X,K):
     f = X.shape[1]              # number of features
-    n = 20                      # minimum number of times to run K_Means(X,K)
+    n = 20                      # minimum number of times to run K_Means(X,K), 20 is arbitrary
     sets = np.zeros((n, K, f))  # generated sets of cluster centers, n sets of shape [K,f]
     counts = np.zeros(n)        # how many times some cluster set is returned
 
@@ -55,11 +56,11 @@ def K_Means_better(X,K):
     # Run minimum number of times, then start checking if a set of cluster centers is a majority
     # print("here0")
     while (np.sum(counts) < n) or (np.amax(counts) / np.sum(counts) <= .5) :
-        if np.sum(counts) > 198 :
-            print(np.amax(counts) / np.sum(counts))
+        # # Debugging, keep track of majority
+        # if np.sum(counts) > 20 :
+        #     print(np.amax(counts), "/", np.sum(counts), "=", np.amax(counts) / np.sum(counts))
         # Generate clusters
         C = K_Means(X, K)
-        print("C: \n", C)
         # Compare against every previously generated set of cluster centers
         for i in range(n):
             # If same as one generated before, add to that one's count
@@ -69,16 +70,21 @@ def K_Means_better(X,K):
             # If not and this set of cluster centers is empty (all zeroes), fill it in
             elif ( np.array_equal(sets[i], np.zeros([K,f])) ):
                 sets[i] = C
-                counts[i] += 0
+                counts[i] += 1
                 break
             # If we're out of room, attach it
             else:
                 sets = np.append(sets, [C], axis=0)
+                #counts = np.append(counts, 1)
                 break
+    majority = np.argmax(counts)        #index of set of cluster centers with majority
+    # #Debugging, show variables
+    # print("counts: ", counts)
+    # print("sets: ", sets)
+    # print("majority: sets[", majority, "]:\n", sets[majority] )
+
     # return the set cluster centers with the most returns
-    print("counts: ", counts)
-    print("sets: ", sets)
-    return sets[0:1]
+    return sets[majority]
 
 # calc_dist(a,n) , a is a point, b is a point
 #   Finds Euclidean distance between two points
@@ -100,7 +106,7 @@ def calc_dist(a, b):
 # d = np.array(p)
 # c = np.append(c, [d], axis=0)
 # print("c: \n", c)
-# print("c[]: \n", c[1])
+# print("c[4]: \n", c[4])
 
 # print("d: \n", d)
 
@@ -108,12 +114,15 @@ def calc_dist(a, b):
 #     print("Yes")
 # else:
 #     print("No")
-
+# n = 10
+# z = np.zeros(n)
+# zop = np.append(z,1)
+# print("zop: \n", zop)
 
 # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ First Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-# X = np.array( [[0], [1], [2], [7], [8], [9], [12], [14], [15]] )
-# K = 3
-# C = K_Means(X, K)
+X = np.array( [[0], [1], [2], [7], [8], [9], [12], [14], [15]] )
+K = 3
+C = K_Means(X, K)
 
 # # Visuals for debugging
 # print("X: \n", X)
@@ -123,15 +132,14 @@ def calc_dist(a, b):
 # plt.title('X')
 # plt.show()
 
-print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Second Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+# print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Second Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 X_2 = np.array( [ [1, 0], [7, 4], [9, 6], [2, 1], [4, 8], [0, 3], [13, 5], [6, 8], [7, 3], [3, 6], [2, 1], [8, 3], [10, 2], [3, 5], [5, 1], [1, 9], [10, 3], [4, 1], [6, 6], [2, 2] ] )
 K_2 = 2
 C_2 = K_Means_better(X_2, K_2)
 
-# Visuals for debugging
-print("X_2: \n", X_2)
-print("C_2: \n", C_2)
-plt.scatter(C_2[:,0], C_2[:,1], label='centers')
-plt.scatter(X_2[:,0], X_2[:,1], label='samples')
-plt.title('X_2')
-plt.show()
+# # Visuals for debugging
+# print("C_2: \n", C_2)
+# plt.scatter(C_2[:,0], C_2[:,1], label='centers')
+# plt.scatter(X_2[:,0], X_2[:,1], label='samples')
+# plt.title('X_2')
+# plt.show()
