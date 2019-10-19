@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import perceptron as p
 import nearest_neighbors as knn
+import clustering as km
 
 # KNN TESTING
 X_train = np.array( [[1,5], [2,6], [2,7], [3,7], [3,8], [4,8], [5,1], [5,9], [6,2], [7,2], [7,3], [8,3], [8,4], [9,5]] )
@@ -21,6 +22,44 @@ print()
 best_K = knn.choose_K(X_train, Y_train, X_test, Y_test)
 print("Best K:",best_K,"\n")
 print()
+
+# K-Means TESTING
+print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ First Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+X = np.array( [[0], [1], [2], [7], [8], [9], [12], [14], [15]] )
+K = 3
+C = km.K_Means(X, K)
+
+# Visuals for debugging, Uncomment matplot header in clustering.py to use
+print("C: \n", C)
+plt.scatter(C, np.ones((C.shape[0],1)), label='centers')
+plt.scatter(X, np.zeros((X.shape[0],1)), label='samples')
+plt.title('X, K=3')
+# plt.savefig("k_means_results_1.png")  #Uncomment to save plot as file
+plt.show()
+
+print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Second Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+X_2 = np.array( [ [1, 0], [7, 4], [9, 6], [2, 1], [4, 8], [0, 3], [13, 5], [6, 8], [7, 3], [3, 6], [2, 1], [8, 3], [10, 2], [3, 5], [5, 1], [1, 9], [10, 3], [4, 1], [6, 6], [2, 2] ] )
+K_2 = 2
+C_2 = km.K_Means_better(X_2, K_2)
+
+# Visuals for debugging, Uncomment matplot header in clustering.py to use
+print("C_2: \n", C_2)
+plt.scatter(C_2[:,0], C_2[:,1], label='centers')
+plt.scatter(X_2[:,0], X_2[:,1], label='samples')
+plt.title('X_2, K=2')
+# plt.savefig("k_means_results_2.png")  #Uncomment to save plot as file
+plt.show()
+
+
+K_3 = 3
+C_3 = km.K_Means_better(X_2, K_3)
+# Visuals for debugging, Uncomment matplot header in clustering.py to use
+print("C_3: \n", C_3)
+plt.scatter(C_3[:,0], C_3[:,1], label='centers')
+plt.scatter(X_2[:,0], X_2[:,1], label='samples')
+plt.title('X_2, K=3')
+# plt.savefig("k_means_results_3.png")  #Uncomment to save plot as file
+plt.show()
 
 
 # PERCEPTRON TESTING
