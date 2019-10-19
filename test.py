@@ -23,15 +23,27 @@ best_K = knn.choose_K(X_train, Y_train, X_test, Y_test)
 print("Best K:",best_K,"\n")
 print()
 
-# K-Means TESTING
+# K-MEANS TESTING
+
 print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ First Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 X = np.array( [[0], [1], [2], [7], [8], [9], [12], [14], [15]] )
-K = 3
+K = 2
 C = km.K_Means(X, K)
 
 # Visuals for debugging, Uncomment matplot header to use
 print("C: \n", C)
 plt.scatter(C, np.ones((C.shape[0],1)), label='centers')
+plt.scatter(X, np.zeros((X.shape[0],1)), label='samples')
+plt.title('X, K=2')
+plt.savefig("k_means_results_0.png")  #Uncomment to save plot as file
+plt.show()
+
+K_b = 3
+C_b = km.K_Means(X, K_b)
+
+# Visuals for debugging, Uncomment matplot header to use
+print("C_b: \n", C_b)
+plt.scatter(C_b, np.ones((C_b.shape[0],1)), label='centers')
 plt.scatter(X, np.zeros((X.shape[0],1)), label='samples')
 plt.title('X, K=3')
 # plt.savefig("k_means_results_1.png")  #Uncomment to save plot as file
