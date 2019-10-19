@@ -102,9 +102,9 @@ def calc_dist(a, b):
     return np.sqrt(dist)
 
 # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ First Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-X = np.array( [[0], [1], [2], [7], [8], [9], [12], [14], [15]] )
-K = 3
-C = K_Means(X, K)
+# X = np.array( [[0], [1], [2], [7], [8], [9], [12], [14], [15]] )
+# K = 3
+# C = K_Means(X, K)
 
 # # Visuals for debugging, Uncomment matplot header to use
 # print("C: \n", C)
@@ -115,9 +115,9 @@ C = K_Means(X, K)
 # plt.show()
 
 # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Second Part ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-X_2 = np.array( [ [1, 0], [7, 4], [9, 6], [2, 1], [4, 8], [0, 3], [13, 5], [6, 8], [7, 3], [3, 6], [2, 1], [8, 3], [10, 2], [3, 5], [5, 1], [1, 9], [10, 3], [4, 1], [6, 6], [2, 2] ] )
-K_2 = 2
-C_2 = K_Means_better(X_2, K_2)
+# X_2 = np.array( [ [1, 0], [7, 4], [9, 6], [2, 1], [4, 8], [0, 3], [13, 5], [6, 8], [7, 3], [3, 6], [2, 1], [8, 3], [10, 2], [3, 5], [5, 1], [1, 9], [10, 3], [4, 1], [6, 6], [2, 2] ] )
+# K_2 = 2
+# C_2 = K_Means_better(X_2, K_2)
 
 # # Visuals for debugging, Uncomment matplot header to use
 # print("C_2: \n", C_2)
@@ -128,8 +128,8 @@ C_2 = K_Means_better(X_2, K_2)
 # plt.show()
 
 
-K_3 = 3
-C_3 = K_Means_better(X_2, K_3)
+# K_3 = 3
+# C_3 = K_Means_better(X_2, K_3)
 # # Visuals for debugging, Uncomment matplot header to use
 # print("C_3: \n", C_3)
 # plt.scatter(C_3[:,0], C_3[:,1], label='centers')
