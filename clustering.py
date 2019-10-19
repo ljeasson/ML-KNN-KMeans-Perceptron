@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # K_Means(X, K) , X is samples, K is number of clusters
-#   Computes K cluster centers based on Euclidean distance
+#   Returns a set of K cluster centers based on Euclidean distance
 #     1. Generates unique random indexes to use as initial cluster centers
 #     2. Assigns each sample to a cluster center based on smallest Euclidean distance using calc_dist()
 #     3. Updates cluster center as a sample is added to its cluster
@@ -44,6 +44,15 @@ def K_Means(X, K):
         C[c_i] = ( current_sum + X[i] ) / C_n[c_i]
 
     return C
+
+# K_Means_better(X, K) , X is samples, K is number of clusters
+#   Returns the best set of K cluster centers. Runs K_Means(X,K) a large minimum amount of times.
+#   Chooses to return the set of K clusters centers that is returned a majority of the time.
+#     1. Generates a set of K-Cluster centers with K_Means(X,K)
+#     2. Keep count of how many times each unique set is generated
+#     3. Run K_Means(X,K) many times
+#     4. Run until set of cluster centers is returned a majority of the time
+#     5. Return that set of cluster centers
 
 
 def K_Means_better(X,K):
